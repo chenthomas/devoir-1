@@ -1,75 +1,34 @@
-<!DOCTYPE html>
-<html lang="en" ng-app="sampleApp">
+<!doctype html>
+<html lang="en" ng-app="devoir1">
 <head>
-    <meta charset="UTF-8">
-    <title>Document</title>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<link rel="stylesheet" href="assets/js/vendors/bootstrap/dist/css/bootstrap.css"/>
 </head>
-<body ng-controller="SampleCtrl">
-    <div ng-repeat="event in events">
-        <div>Name {{event.name}}</div>
-        <div>Description : {{event.description}}</div>
-        <div>{{event.attend}}/{{event.maxAttend}} going</div>
-        <button ng-click='addAttend($index)'>Im coming ! </button>
-        <div ng-show='addAttendMax($index)'>Too many people :(</div>
-        <button ng-click='changeEvent($index)'>Edit</button>
+<body>
+<div class="navbar navbar-default" role="navigation" bs-navbar>
+	<ul class="nav navbar-nav">
+		<li data-match-route="/events"><a href="#/events">Events</a></li>
+		<li data-match-route="/create"><a href="#/create">Create Event</a></li>
+	</ul>
+</div>
+<div class="container">
+<div class="row">
+    <div class="col-md-6 col-md-offset-3" ng-view>
+
     </div>
-    <div>
-        Add an Event
-        <form ng-submit="submit()">
-            Name:
-            <input type="text" ng-model="createEvent.name" />
-            Description:
-            <input type="text" ng-model="createEvent.description" />
-            Max Attend:
-            <input type="number" ng-model="createEvent.maxAttend" />
-            <input type="submit" value="Submit" />
-        </form>
-        </div>
-    <script src="bower_components/angular/angular.min.js"></script>
-    <script src="bower_components/firebase/firebase.js"></script>
-    <script src="bower_components/angularfire/dist/angularfire.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.10/angular-route.min.js"></script>
+</div>
+</div>
 
-    <script>
-    angular.module('sampleApp', ["firebase", 'ngRoute'])
-    .controller("SampleCtrl", ["$scope", "$firebase", function($scope, $firebase) {
-        var ref = new Firebase("https://vivid-heat-5519.firebaseio.com/");
-        // create an AngularFire reference to the data
-        var sync = $firebase(ref);
+<script src="assets/js/vendors/angular/angular.js"></script>
+<script src="assets/js/vendors/angular-strap/dist/angular-strap.js"></script>
+<script src="assets/js/vendors/angular-strap/dist/angular-strap.tpl.js"></script>
+<script src="assets/js/vendors/angular-route/angular-route.js"></script>
 
-        $scope.events = [
-        {name: "Discover and Enjoy London with New Friends.", description: "YOU CAN NOW JOIN KEN'S EVENTS FOR FREE!!!FROM TODAY - JOINING FEE AND ANNUAL MEMBERSHIP FEE NOW  DISCONTINUED.", attend: 0, maxAttend: 20},
-        {name: "Mandarin Corner - Learn to play Mahjong!", description: "Only £5 per person, Free for member", attend: 1, maxAttend: 5},
-        {name: "Afternoon Tea", description: "We haven't done an afternoon tea in a while, so let's head out for one - and a very good value one at that for just £10!", attend: 0, maxAttend: 10}
-        ];
-        $scope.createEvent = {
-            name: null,
-            description: null,
-            attend: 0,
-            maxAttend: 1
-        };
-        $scope.addAttend = function (index) {
-            $scope.events[index].attend<$scope.events[index].maxAttend ? $scope.events[index].attend++ : $scope.events[index].attend;
-        };
-        $scope.addAttendMax = function (index){
-            var i = $scope.events[index].attend;
-            if (i == $scope.events[index].maxAttend){
-                return true;
-            }
-        };
-        $scope.submit = function() {
-            if ($scope.createEvent.name && $scope.createEvent.description) {
-                $scope.events.push({
-                    name: $scope.createEvent.name,
-                    description: $scope.createEvent.description,
-                    attend: $scope.createEvent.attend,
-                    maxAttend: $scope.createEvent.maxAttend
-                    });
-                $scope.createEvent.name = '';
-                console.log('salut');
-            }
-        };
-    }]);
-    </script>
+<script src="assets/js/app.js"></script>
+
+<script src="assets/js/services.js"></script>
+<script src="assets/js/config.js"></script>
 </body>
 </html>
